@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Delete } from '@nestjs/common';
+import { timeStamp } from 'console';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +25,35 @@ export class UsersService {
         console.log(user)
         return {
             user
+        }
+    }
+    updateUser(id:number,body:any){
+        
+        const index=this.users.findIndex(user=>user.id===id) 
+        if(index===-1){
+            return {
+                message:"User not found"
+            }
+        }
+        this.users[index]={id,...body}
+        return {
+            message:"User Update succesfully",
+            data:this.users[index]
+        }
+    }
+    deleteUser(id:Number){
+        const index=this.users.findIndex(user=>user.id===id) 
+        if(index===-1){
+            return {
+                message:"User not found"
+            }
+        }
+        const deltedUser=this.users[index]
+        this.users.splice(index,1)
+        
+        return {
+            message:"User Deleted succesfully",
+            data:this.users[index]
         }
     }
 }
