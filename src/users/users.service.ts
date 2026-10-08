@@ -2,13 +2,28 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
-    getUser(userId:string,orderId:string):string{
-        return `Welcome id ${userId} Your order id is ${orderId}`
-    }
-     getUsers(page:string,limit:string){
-        return `You are currently on page ${page} and per page limit is ${limit}`
-    }
+    private users=[{id:1,name:"Rohan",email:"rohan@gmail.com"}]
     createUser(body:any){
-        return `The data you sent ${JSON.stringify(body)}`
+        this.users.push(body)
+        return {
+            'succes':true,
+            'message':'user successfully created',
+            "Data":body
+
+        }
+    }
+    getUser(){
+        return this.users
+    }
+    getUserById(id:any){
+        
+        const user=this.users.find((arr)=>{
+            
+           return  arr.id===id
+        })
+        console.log(user)
+        return {
+            user
+        }
     }
 }
